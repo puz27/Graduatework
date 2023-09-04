@@ -2,7 +2,7 @@ from configparser import ConfigParser
 import psycopg2
 
 
-def config(filename="database.ini", section="postgresql") -> dict:
+def config(filename="../database.ini", section="postgresql") -> dict:
     """
     Get configuration for connection to database
     :param filename: name of configuration file
