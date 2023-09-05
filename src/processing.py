@@ -3,6 +3,9 @@ from data_base_manager import DBManager
 from utils import config
 
 
+
+
+
 # work with base
 connection_params = config()
 data_base = DBManager(connection_params, "codeforces_base")
@@ -15,3 +18,7 @@ codeforces_data = RequestManager()
 codeforces_data.get_request()
 for problem in codeforces_data.problems_data:
     print(problem)
+
+
+# data_base.insert_data("codeforces_base", codeforces_data.problems_data)
+

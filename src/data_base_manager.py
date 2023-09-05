@@ -80,6 +80,10 @@ class DBManager:
                 with connection:
                     with connection.cursor() as cursor:
                         col_count = "".join("%s," * len(data[0]))
+
+                        print(col_count)
+                        print("+++++++=++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                        print(data[0])
                         query = f"INSERT INTO {table} VALUES ({col_count[:-1]})"
                         cursor.executemany(query, data)
                         connection.commit()

@@ -45,3 +45,11 @@ def connection_to_db(connection_params: dict, query_db: str) -> None:
             connection.close()
     except psycopg2.OperationalError as er:
         print(er)
+
+
+def prepare_problem_format(problem: dict) -> dict:
+    default_tags = ('contestId', 'index', 'name', 'type', 'rating', 'tags', 'points')
+    for tag in default_tags:
+        problem.setdefault(tag)
+    sorted_problem = dict(sorted(problem.items()))
+    return sorted_problem

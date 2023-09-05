@@ -1,4 +1,5 @@
 import requests
+from utils import prepare_problem_format
 
 
 class RequestManager:
@@ -17,6 +18,7 @@ class RequestManager:
         if response.status_code == 200:
             if response.status_code == 200:
                 for data in response.json()["result"]["problems"]:
-                    self.__problems_data.append(data)
+                    prepared_data = prepare_problem_format(data)
+                    self.__problems_data.append(prepared_data)
         else:
             return "Error:", response.status_code
