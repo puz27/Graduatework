@@ -3,7 +3,8 @@
 ---
 
 CREATE TABLE problems (
-contestId SERIAL PRIMARY KEY,
+id SERIAL PRIMARY KEY,
+contestId integer NOT NULL,
 index VARCHAR(10) NOT NULL,
 name VARCHAR(10) NOT NULL,
 type VARCHAR(10) NOT NULL,
