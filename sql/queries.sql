@@ -5,10 +5,12 @@
 CREATE TABLE problems (
 id SERIAL PRIMARY KEY,
 contestId integer NOT NULL,
-index VARCHAR(10) NOT NULL,
-name VARCHAR(10) NOT NULL,
-type VARCHAR(10) NOT NULL,
-tags VARCHAR(10) NOT NULL)
+index VARCHAR(100) NOT NULL,
+name VARCHAR(100),
+points VARCHAR(100),
+rating VARCHAR(100),
+tags VARCHAR(1000),
+type VARCHAR(100))
 
 --CREATE TABLE vacancies (
 --vacancy_id SERIAL PRIMARY KEY,

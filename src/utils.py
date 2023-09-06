@@ -47,9 +47,10 @@ def connection_to_db(connection_params: dict, query_db: str) -> None:
         print(er)
 
 
-def prepare_problem_format(problem: dict) -> dict:
+def prepare_problem_format(problem: dict) -> list:
     default_tags = ('contestId', 'index', 'name', 'type', 'rating', 'tags', 'points')
     for tag in default_tags:
         problem.setdefault(tag)
+    # sorted_problem = dict(sorted(problem.items()))
     sorted_problem = dict(sorted(problem.items()))
-    return sorted_problem
+    return list(sorted_problem.values())
