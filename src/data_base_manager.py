@@ -81,7 +81,7 @@ class DBManager:
                     with connection.cursor() as cursor:
                         col_count = "".join("%s," * len(data[0]))
 
-                        query = f"INSERT INTO {table} (contestId, index, name, points, rating, tags, type) VALUES ({col_count[:-1]})"
+                        query = f"INSERT INTO {table} (contestId, index, name, points, rating, tags, type, solvedCount) VALUES ({col_count[:-1]})"
                         cursor.executemany(query, data)
                         connection.commit()
                         print(f"Операция над таблицей {table} прошла успешно.")
@@ -108,7 +108,7 @@ class DBManager:
                     with connection.cursor() as cursor:
                         col_count = "".join("%s," * len(data[0]))
 
-                        query = f"INSERT INTO {table} (contestId, index, solvedcount) VALUES ({col_count[:-1]})"
+                        query = f"INSERT INTO {table} (contestId, index, solvedCount) VALUES ({col_count[:-1]})"
                         cursor.executemany(query, data)
                         connection.commit()
                         print(f"Операция над таблицей {table} прошла успешно.")

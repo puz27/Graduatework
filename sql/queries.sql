@@ -10,13 +10,14 @@ name VARCHAR(100),
 points VARCHAR(100),
 rating VARCHAR(100),
 tags VARCHAR(1000),
-type VARCHAR(100));
-
-CREATE TABLE problemStatistics (
-id SERIAL PRIMARY KEY,
-contestId integer NOT NULL,
-index VARCHAR(100) NOT NULL,
+type VARCHAR(100),
 solvedCount integer);
+
+--CREATE TABLE problemStatistics (
+--id SERIAL PRIMARY KEY,
+--contestId integer NOT NULL,
+--index VARCHAR(100) NOT NULL,
+--solvedCount integer);
 
 --CREATE TABLE vacancies (
 --vacancy_id SERIAL PRIMARY KEY,
