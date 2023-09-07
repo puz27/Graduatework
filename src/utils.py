@@ -54,3 +54,12 @@ def prepare_problem_format(problem: dict) -> list:
     # sorted_problem = dict(sorted(problem.items()))
     sorted_problem = dict(sorted(problem.items()))
     return list(sorted_problem.values())
+
+
+def prepare_problem_format2(problem: dict) -> list:
+    default_tags = ('contestId', 'index', 'solvedcount')
+    for tag in default_tags:
+        problem.setdefault(tag)
+    # sorted_problem = dict(sorted(problem.items()))
+    sorted_problem = dict(sorted(problem.items()))
+    return list(sorted_problem.values())

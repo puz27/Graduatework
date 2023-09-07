@@ -92,6 +92,34 @@ class DBManager:
         except psycopg2.OperationalError as er:
             print(er)
 
+    def insert_data2(self, table: str, data: list) -> None:
+        """
+        Insert new data to database
+        :param table: table name for insert
+        :param data: list with data for processing
+        :return:
+        """
+        try:
+            self.__connection_params.update({'dbname': self.__database})
+            connection = psycopg2.connect(**self.__connection_params)
+
+            try:
+                with connection:
+                    with connection.cursor() as cursor:
+                        col_count = "".join("%s," * len(data[0]))
+
+                        query = f"INSERT INTO {table} (contestId, index, solvedcount) VALUES ({col_count[:-1]})"
+                        cursor.executemany(query, data)
+                        connection.commit()
+                        print(f"Операция над таблицей {table} прошла успешно.")
+            except psycopg2.Error as er:
+                print(f"Ошибка с запросом.\n{er}")
+            finally:
+                connection.close()
+        except psycopg2.OperationalError as er:
+            print(er)
+
+
     def get_companies_and_vacancies(self) -> None:
         """
         Get all companies and vacancies count from database
