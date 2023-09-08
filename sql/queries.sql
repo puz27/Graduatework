@@ -3,15 +3,14 @@
 ---
 
 CREATE TABLE problems (
-id SERIAL PRIMARY KEY,
-contestId integer NOT NULL,
-index VARCHAR(100) NOT NULL,
+contestId VARCHAR PRIMARY KEY,
 name VARCHAR(100),
 points VARCHAR(100),
-rating VARCHAR(100),
+rating integer,
+solvedCount integer,
 tags VARCHAR(1000),
-type VARCHAR(100),
-solvedCount integer);
+type VARCHAR(100)
+);
 
 --CREATE TABLE problemStatistics (
 --id SERIAL PRIMARY KEY,

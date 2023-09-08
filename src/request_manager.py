@@ -1,5 +1,5 @@
 import requests
-from utils import prepare_problem_format, prepare_problem_format2
+from utils import prepare_problem_format
 
 
 class RequestManager:
@@ -23,21 +23,13 @@ class RequestManager:
         if response.status_code == 200:
             if response.status_code == 200:
 
-                # for data in response.json()["result"]["problems"]:
-                #     prepared_data = prepare_problem_format(data)
-                #     self.__problems_data.append(prepared_data)
-
-                # for data in response.json()["result"]["problemStatistics"]:
-                #     prepared_problemStatistics_data = prepare_problem_format2(data)
-                #     self.__problemStatistics_data.append(prepared_problemStatistics_data)
-
                 for statistic in response.json()["result"]["problemStatistics"]:
-                    # print(statistic["contestId"], statistic["index"])
                     for problem in response.json()["result"]["problems"]:
                         # print(problem)
                         if problem["contestId"] == statistic["contestId"] and problem["index"] == statistic["index"]:
                             problem["solvedCount"] = statistic["solvedCount"]
                             prepared_data = prepare_problem_format(problem)
+                            print(prepared_data)
                             self.__problems_data.append(prepared_data)
         else:
             return "Error:", response.status_code

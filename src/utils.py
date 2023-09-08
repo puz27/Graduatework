@@ -48,25 +48,26 @@ def connection_to_db(connection_params: dict, query_db: str) -> None:
 
 
 # def prepare_problem_format(problem: dict) -> list:
-#     default_tags = ('contestId', 'index', 'name', 'type', 'rating', 'tags', 'points')
+#     default_tags = ('contestId', 'index', 'name', 'type', 'rating', 'solvedCount', 'tags', 'points')
 #     for tag in default_tags:
 #         problem.setdefault(tag)
 #     # sorted_problem = dict(sorted(problem.items()))
 #     sorted_problem = dict(sorted(problem.items()))
 #     return list(sorted_problem.values())
 
-def prepare_problem_format(problem: dict) -> list:
-    default_tags = ('contestId', 'index', 'name', 'type', 'rating', 'tags', 'points', 'solvedCount')
-    for tag in default_tags:
-        problem.setdefault(tag)
-    # sorted_problem = dict(sorted(problem.items()))
-    sorted_problem = dict(sorted(problem.items()))
-    return list(sorted_problem.values())
 
-def prepare_problem_format2(problem: dict) -> list:
-    default_tags = ('contestId', 'index', 'solvedCount')
+def prepare_problem_format(problem: dict) -> list:
+    default_tags = ('name', 'type', 'rating', 'solvedCount', 'tags', 'points')
     for tag in default_tags:
         problem.setdefault(tag)
-    # sorted_problem = dict(sorted(problem.items()))
-    sorted_problem = dict(sorted(problem.items()))
-    return list(sorted_problem.values())
+
+    prepared_dict = {
+        'contestId': str(problem["contestId"]) + str(problem["index"]),
+        'name': problem["name"],
+        'points': problem["points"],
+        'rating': problem["rating"],
+        'solvedCount': problem["solvedCount"],
+        'tags': problem["tags"],
+        'type': problem["type"]
+    }
+    return list(prepared_dict.values())
