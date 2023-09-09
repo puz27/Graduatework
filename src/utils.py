@@ -37,8 +37,8 @@ def connection_to_db(connection_params: dict, query_db: str) -> None:
                     query = query_db
                     cursor.execute(query)
                     connection.commit()
-                    for company in (cursor.fetchall()):
-                        print(*company)
+                    # for company in (cursor.fetchall()):
+                    #     print(*company)
         except psycopg2.Error as er:
             print(f"Ошибка с запросом.\n{er}")
         finally:

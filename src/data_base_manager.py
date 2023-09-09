@@ -93,18 +93,39 @@ class DBManager:
         except psycopg2.OperationalError as er:
             print(er)
 
-    def get_companies_and_vacancies(self) -> None:
-        """
-        Get all companies and vacancies count from database
-        :return:
-        """
-        query = f"""
-        select company_name, COUNT(*) from companies
-        INNER JOIN vacancies USING (company_id)
-        GROUP BY company_name
-        ORDER BY company_name"""
-        self.__connection_params.update({'dbname': self.__database})
-        connection_to_db(self.__connection_params, query)
+    def check_id(self,  table: str, problem: list) -> None:
+
+        try:
+            self.__connection_params.update({'dbname': self.__database})
+            connection = psycopg2.connect(**self.__connection_params)
+
+            try:
+                with connection:
+                    with connection.cursor() as cursor:
+                        col_count = "".join("%s," * len(problem))
+                        query_search = f"""
+                                select contestId from problems
+                                where contestId = '{problem[0]}'
+                                """
+                        query_insert = f"INSERT INTO {table} VALUES ({col_count[:-1]})"
+
+                        cursor.execute(query_search)
+                        connection.commit()
+                        get_id = cursor.fetchone()
+                        if get_id is None:
+                            print(problem, "No in base. Must add!")
+                            cursor.execute(query_insert, problem)
+                            connection.commit()
+
+            except psycopg2.Error as er:
+                print(f"Ошибка с запросом.\n{er}")
+            finally:
+                connection.close()
+        except psycopg2.OperationalError as er:
+            print(er)
+
+
+
 
     def get_all_vacancies(self) -> None:
         """

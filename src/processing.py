@@ -4,23 +4,40 @@ from utils import config
 from utils import prepare_problem_format
 import requests
 
-# work with base
+# prepare bases and add info to it
 connection_params = config()
 data_base = DBManager(connection_params, "codeforces_base")
+codeforces_data = RequestManager()
 # data_base.create_database("codeforces_base")
 # data_base.create_tables()
 
+# get_problems_data = codeforces_data.problems_data
+# data_base.insert_data("problems", get_problems_data)
+
+
 
 # work with requests
-codeforces_data = RequestManager()
+# xxx = [['1u', 'Theatre Square', None, 1000, 219574, ['math'], 'PROGRAMMING'], ['1jy', 'Theatre Square', None, 1000, 219574, ['math'], 'PROGRAMMING']]
 codeforces_data.get_request()
+for problem in codeforces_data.problems_data:
+    data_base.check_id("problems", problem)
 
 
-get_problems_data = codeforces_data.problems_data
+# get_problems_data = codeforces_data.problems_data
 # xxx = [['1A', 'Theatre Square', None, 1000, 219574, ['math'], 'PROGRAMMING']]
 # data_base.insert_data("problems", xxx)
+# data_base.insert_data("problems", get_problems_data)
 
-data_base.insert_data("problems", get_problems_data)
+
+
+
+
+
+
+
+
+
+
 
 # x = [[1857, 'F', 'Sum and Product', None, 1600, 7879, ['binary search', 'data structures', 'math'], 'PROGRAMMING'], [1111, 'F', 'Sum and Product', None, 1600, 7879, ['binary search', 'data structures', 'math'], 'PROGRAMMING']]
 # ddd = [[1857, 'F', 'Sum and Product', 'PROGRAMMING', 1600, 7879, ['binary search', 'data structures'], 'math']]
