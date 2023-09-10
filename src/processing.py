@@ -8,25 +8,47 @@ import requests
 connection_params = config()
 data_base = DBManager(connection_params, "codeforces_base")
 codeforces_data = RequestManager()
-# data_base.create_database("codeforces_base")
-# data_base.create_tables()
 
+data_base.create_database("codeforces_base")
+data_base.create_tables()
+
+codeforces_data.get_request()
+get_problems_data = codeforces_data.problems_data
+data_base.insert_data("problems", get_problems_data)
+
+
+# check every hour
+# codeforces_data.get_request()
 # get_problems_data = codeforces_data.problems_data
-# data_base.insert_data("problems", get_problems_data)
+# data_base.check_id("problems", get_problems_data)
+
+
+
+
+
+
+
+# print(data_base.get_problems("problems", 1000, 10, 10))
+# c = {"constructive algorithms",math,"number theory"}
 
 
 
 # work with requests
 # xxx = [['1u', 'Theatre Square', None, 1000, 219574, ['math'], 'PROGRAMMING'], ['1jy', 'Theatre Square', None, 1000, 219574, ['math'], 'PROGRAMMING']]
-codeforces_data.get_request()
-for problem in codeforces_data.problems_data:
-    data_base.check_id("problems", problem)
+# codeforces_data.get_request()
+# for problem in codeforces_data.problems_data:
+#     data_base.check_id("problems", problem)
 
 
 # get_problems_data = codeforces_data.problems_data
 # xxx = [['1A', 'Theatre Square', None, 1000, 219574, ['math'], 'PROGRAMMING']]
 # data_base.insert_data("problems", xxx)
 # data_base.insert_data("problems", get_problems_data)
+
+
+
+# "binary search","data structures",dp,geometry,graphs,implementation,trees,games,"two pointers", combinatorics,"brute force",math,probabilities,combinatorics,"number theory","constructive algorithms"
+
 
 
 
@@ -85,7 +107,7 @@ download_dict = {'contestId': 1, 'index': 'B', 'name': 'Spreadsheet', 'type': 'P
 #             contestId = problem["contestId"]
 #             index = problem["index"]
 #             print(contestId, index)
-#
+# #
 # # select * from problems
 # # where contestid = 1872 and index = 'G'
 

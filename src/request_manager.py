@@ -22,6 +22,7 @@ class RequestManager:
         response = requests.get(url_problemset)
         if response.status_code == 200:
             if response.status_code == 200:
+                self.__problems_data = []
 
                 for statistic in response.json()["result"]["problemStatistics"]:
                     for problem in response.json()["result"]["problems"]:

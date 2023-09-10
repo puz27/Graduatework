@@ -93,7 +93,7 @@ class DBManager:
         except psycopg2.OperationalError as er:
             print(er)
 
-    def check_id(self,  table: str, problem: list) -> None:
+    def check_id(self, table: str, problem: list) -> None:
 
         try:
             self.__connection_params.update({'dbname': self.__database})
@@ -124,21 +124,39 @@ class DBManager:
         except psycopg2.OperationalError as er:
             print(er)
 
+    def get_problems(self,  table: str, rating: int, tag: str, limit: int) -> None:
+
+        try:
+            self.__connection_params.update({'dbname': self.__database})
+            connection = psycopg2.connect(**self.__connection_params)
+
+            try:
+                with connection:
+                    with connection.cursor() as cursor:
+                        query_search = f"""
+                                select * from problems
+                                where rating = {rating} and tags = '{tag}'
+                                LIMIT {limit}
+                                """
+                        cursor.execute(query_search)
+                        connection.commit()
+                        get_problems = cursor.fetchall()
+
+            except psycopg2.Error as er:
+                print(f"Ошибка с запросом.\n{er}")
+            finally:
+                connection.close()
+                return get_problems
+        except psycopg2.OperationalError as er:
+            print(er)
 
 
 
-    def get_all_vacancies(self) -> None:
-        """
-        Get all vacancies from database
-        :return:
-        """
-        query = f"""
-        select company_name, vacancy_name,
-        vacancy_salary_from, vacancy_salary_to, vacancy_url  from vacancies
-        INNER JOIN companies USING (company_id)
-        ORDER BY company_name"""
-        self.__connection_params.update({'dbname': self.__database})
-        connection_to_db(self.__connection_params, query)
+
+
+
+
+
 
     def get_avg_salary_by_company(self) -> None:
         """
