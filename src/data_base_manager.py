@@ -93,7 +93,7 @@ class DBManager:
         except psycopg2.OperationalError as er:
             print(er)
 
-    def check_id(self, table: str, problem: list) -> None:
+    def insert_new_data(self, table: str, problem: list) -> None:
 
         try:
             self.__connection_params.update({'dbname': self.__database})

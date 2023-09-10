@@ -72,7 +72,3 @@ def prepare_problem_format(problem: dict) -> list:
     }
     return list(prepared_dict.values())
 
-
-download_dict = {'contestId': 1, 'index': 'B', 'name': 'Spreadsheet', 'type': 'PROGRAMMING', 'rating': 1600, 'tags': ['implementation', 'math']}
-print(*download_dict["tags"])
-print(prepare_problem_format(download_dict))
