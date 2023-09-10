@@ -1,10 +1,13 @@
 import asyncio
 import logging
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, Router
 from aiogram.filters.command import Command
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, Message, ReplyKeyboardRemove
 from aiogram import F
-
-
+from aiogram.filters import Command
+from aiogram.fsm.context import FSMContext
+from aiogram import Dispatcher, types
+from aiogram.filters.state import State, StatesGroup
 TOKEN = '6480811920:AAHEynHpGdX9Wd7ImYGtOTi74Wjn2OmVqBw'
 
 
@@ -44,6 +47,8 @@ async def with_puree(message: types.Message):
 @dp.message(F.text == "HOW IT IS WORK.")
 async def without_puree(message: types.Message):
     await message.reply("2")
+
+
 
 async def main():
     await dp.start_polling(bot)
