@@ -1,6 +1,6 @@
-from request_manager import RequestManager
-from data_base_manager import DBManager
-from utils import config
+from src.request_manager import RequestManager
+from src.data_base_manager import DBManager
+from src.utils import config
 from utils import prepare_problem_format
 import requests
 

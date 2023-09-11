@@ -1,5 +1,5 @@
 import requests
-from utils import prepare_problem_format
+from src.utils import prepare_problem_format
 
 
 class RequestManager:
