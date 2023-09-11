@@ -1,63 +1,230 @@
-import asyncio
-import logging
-from aiogram import Bot, Dispatcher, types, Router
-from aiogram.filters.command import Command
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, Message, ReplyKeyboardRemove
-from aiogram import F
+from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram import Dispatcher, types
+from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.filters.state import State, StatesGroup
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+import logging
+from aiogram import Bot, Dispatcher
+from aiogram.fsm.storage.memory import MemoryStorage
+import asyncio
+
+
 TOKEN = '6480811920:AAHEynHpGdX9Wd7ImYGtOTi74Wjn2OmVqBw'
 
 
-# Включаем логирование, чтобы не пропустить важные сообщения
-logging.basicConfig(level=logging.INFO)
-# Объект бота
-bot = Bot(token=TOKEN)
-# Диспетчер
-dp = Dispatcher()
+def make_row_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
+    """
+    Создаёт реплай-клавиатуру с кнопками в один ряд
+    :param items: список текстов для кнопок
+    :return: объект реплай-клавиатуры
+    """
+    row = [KeyboardButton(text=item) for item in items]
+    return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
 
 
-# @dp.message(Command("start"))
-# async def cmd_start(message: types.Message):
-#     await message.answer("Hello!")
-@dp.message(Command("start"))
-async def cmd_start(message: types.Message):
-    kb = [
-        [
-            types.KeyboardButton(text="GO TO SEARCH."),
-            types.KeyboardButton(text="HOW IT IS WORK.")
-        ],
-    ]
-    keyboard = types.ReplyKeyboardMarkup(
-        keyboard=kb,
-        resize_keyboard=True,
-        input_field_placeholder="SELECT OPTIO"
-    )
-    await message.answer("SELECT OPTIONS.", reply_markup=keyboard)
+available_options = ["Get data (Difficult + Theme)", "Get data (Name of problem)", "How is it work?"]
+available_themes = ["math", "grapshs"]
 
 
-@dp.message(F.text == "GO TO SEARCH.")
-async def with_puree(message: types.Message):
-    x = 1 + 1
-    await message.reply(str(x))
+class MakeChoice(StatesGroup):
+    choosing_options = State()
+    choosing_food_size = State()
+    choosing_difficult = State()
+    choosing_theme = State()
 
 
-@dp.message(F.text == "HOW IT IS WORK.")
-async def without_puree(message: types.Message):
-    await message.reply("2")
+router = Router()
+
+
+@router.message(Command("start"))
+async def start(message: Message, state: FSMContext):
+    await message.answer(text="Select an option.", reply_markup=make_row_keyboard(available_options))
+    await state.set_state(MakeChoice.choosing_options)
+
+
+@router.message(MakeChoice.choosing_options, F.text.in_(available_options))
+async def options_chosen(message: Message, state: FSMContext):
+    await state.update_data(chosen_options=message.text.lower())
+    await message.answer(text="Спасибо. Теперь, пожалуйста, сложность:")
+    await state.set_state(MakeChoice.choosing_difficult)
+
+
+@router.message(MakeChoice.choosing_difficult)
+async def difficult_chosen(message: Message):
+    x = message.text
+    print(x)
+    await message.answer(text=f"Выбрано сложность: {x} Выберите тему:",
+                         reply_markup=make_row_keyboard(available_themes)
+                         )
+
+
+#
+# @router.message(MakeChoice.choosing_difficult, F.text.in_("*"))
+# async def difficult_chosen(message: Message, state: FSMContext):
+#     await state.update_data(chosen_options=message.text.lower())
+#     await message.answer(text="Спасибо. Теперь, пожалуйста, тему:", reply_markup=make_row_keyboard(available_food_sizes))
+#     await state.set_state(MakeChoice.choosing_difficult)
+#
+#
+# @router.message(MakeChoice.choosing_theme, F.text.in_(available_options))
+# async def theme_chosen(message: Message, state: FSMContext):
+#     await state.update_data(chosen_options=message.text.lower())
+#     await message.answer(text="Спасибо. Теперь, пожалуйста, тему!!!!!!!!!!!!!!!!!!!!!!!:", reply_markup=make_row_keyboard(available_food_sizes))
+#     await state.set_state(MakeChoice.choosing_theme)
+
+
+# @router.message(MakeChoice.choosing_difficult)
+# async def food_chosen_incorrectly(message: Message):
+#     await message.answer(
+#         text="Я не знаю такого блюда.\n\n"
+#              "Пожалуйста, выберите одно из названий из списка ниже:",
+#         reply_markup=make_row_keyboard(available_options)
+#     )
+
+
+
+
+
+# @router.message(MakeChoice.choosing_options)
+# async def food_chosen_incorrectly(message: Message):
+#     await message.answer(
+#         text="Я не знаю такого блюда.\n\n"
+#              "Пожалуйста, выберите одно из названий из списка ниже:",
+#         reply_markup=make_row_keyboard(available_options)
+#     )
+
+
+
+
+
+
+
+# @router.message(MakeChoice.choosing_food_size, F.text.in_(available_food_sizes))
+# async def food_size_chosen(message: Message, state: FSMContext):
+#     user_data = await state.get_data()
+#     await message.answer(
+#         text=f"Вы выбрали {message.text.lower()} порцию {user_data['chosen_food']}.\n"
+#              f"Попробуйте теперь заказать напитки: /drinks",
+#         reply_markup=ReplyKeyboardRemove()
+#     )
+#     # Сброс состояния и сохранённых данных у пользователя
+#     await state.clear()
+
+#
+# @router.message(MakeChoice.choosing_food_size)
+# async def food_size_chosen_incorrectly(message: Message):
+#     await message.answer(
+#         text="Я не знаю такого размера порции.\n\n"
+#              "Пожалуйста, выберите один из вариантов из списка ниже:",
+#         reply_markup=make_row_keyboard(available_food_sizes)
+#     )
+#
+#
+
+
+
 
 
 
 async def main():
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+    )
+
+    # Если не указать storage, то по умолчанию всё равно будет MemoryStorage
+    # Но явное лучше неявного =]
+    dp = Dispatcher(storage=MemoryStorage())
+    bot = Bot(TOKEN)
+
+    dp.include_router(router)
+    # dp.include_router(ordering_food.router)
+    # сюда импортируйте ваш собственный роутер для напитков
+
     await dp.start_polling(bot)
+
 
 asyncio.run(main())
 
-
-
-
+#
+#
+# # Включаем логирование, чтобы не пропустить важные сообщения
+# logging.basicConfig(level=logging.INFO)
+# # Объект бота
+# bot = Bot(token=TOKEN)
+# # Диспетчер
+# dp = Dispatcher()
+#
+#
+# # @dp.message(Command("start"))
+# # async def cmd_start(message: types.Message):
+# #     await message.answer("Hello!")
+#
+# @dp.message(Command("start"))
+# async def cmd_start(message: types.Message):
+#     kb = [
+#         [
+#             types.KeyboardButton(text="Searching. Difficult + Theme."),
+#             types.KeyboardButton(text="Searching. Problem name."),
+#             types.KeyboardButton(text="How is it work?.")
+#         ],
+#     ]
+#     keyboard = types.ReplyKeyboardMarkup(
+#         keyboard=kb,
+#         resize_keyboard=True,
+#         input_field_placeholder="Working.."
+#     )
+#     await message.answer("SELECT OPTIONS.", reply_markup=keyboard)
+#
+#
+# @dp.message(F.text == "Searching. Difficult + Theme.")
+# async def with_puree(message: types.Message):
+#     x = message.from_user
+#     await message.answer(str(x))
+#
+#
+# @dp.message(F.text == "Searching. Problem name.")
+# async def with_puree(message: types.Message):
+#     x = 1 + 1
+#     await message.answer(str(x))
+#
+#
+# @dp.message(F.text == "How is it work?.")
+# async def without_puree(message: types.Message):
+#     await message.answer("2")
+#
+#
+#
+#
+#
+#
+# #
+# # class OrderFood(StatesGroup):
+# #     choosing_food_name = State()
+# #     choosing_food_size = State()
+# #
+# #
+# # @router.message(Command("food"))
+# # async def cmd_food(message: Message, state: FSMContext):
+# #     await message.answer(
+# #         text="Выберите блюдо:",
+# #         reply_markup=make_row_keyboard(available_food_names)
+# #     )
+# #     # Устанавливаем пользователю состояние "выбирает название"
+# #     await state.set_state(OrderFood.choosing_food_name)
+#
+#
+#
+#
+# async def main():
+#     await dp.start_polling(bot)
+#
+# asyncio.run(main())
+#
+#
+#
+#
 
 
 # import logging
