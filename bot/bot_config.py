@@ -1,4 +1,4 @@
-from aiogram import Router, F
+from aiogram import Router, F, types
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, ReplyKeyboardRemove
@@ -8,7 +8,7 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 import asyncio
-
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 TOKEN = '6480811920:AAHEynHpGdX9Wd7ImYGtOTi74Wjn2OmVqBw'
 
@@ -24,7 +24,7 @@ def make_row_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
 
 
 available_options = ["Get data (Difficult + Theme)", "Get data (Name of problem)", "How is it work?"]
-available_themes = ["math", "grapshs"]
+available_themes = ["binary search", "bitmasks", "data structures", "dp", "greedy", "implementation", "bitmasks", "constructive", "algorithms", "math"]
 
 
 class MakeChoice(StatesGroup):
@@ -57,6 +57,7 @@ async def difficult_chosen(message: Message):
     await message.answer(text=f"Выбрано сложность: {x} Выберите тему:",
                          reply_markup=make_row_keyboard(available_themes)
                          )
+
 
 
 #
