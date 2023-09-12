@@ -1,25 +1,34 @@
+from src.dictionary import user_questions
 from src.request_manager import RequestManager
 from src.data_base_manager import DBManager
 from src.utils import config
-import os
 from bot.bot import main_bot
 import asyncio
-# import schedule
-import time
-# from apscheduler.schedulers.blocking import BlockingScheduler
-import datetime
 
-# prepare bases and add info to it
-connection_params = config()
-data_base = DBManager(connection_params, "codeforces_base")
-codeforces_data = RequestManager()
+while True:
+    print(*user_questions)
+    user_answer = input()
+    if user_answer == user_questions["3.End program."]:
+        break
+    if user_answer == user_questions["2.Second running. (Bases already exist.)\n"]:
+        asyncio.run(main_bot())
+    if user_answer == user_questions[" 1.First running.(Create and prepare bases.)\n"]:
+        # prepare bases and add info to it
+        print("Prepare bases. Waiting near 5 minutes...")
+        connection_params = config()
+        data_base = DBManager(connection_params, "codeforces_base")
+        codeforces_data = RequestManager()
 
-# data_base.create_database("codeforces_base")
-# data_base.create_tables()
-#
-# codeforces_data.get_request()
-# get_problems_data = codeforces_data.problems_data
-# data_base.insert_data("problems", get_problems_data)
+        data_base.create_database("codeforces_base")
+        data_base.create_tables()
+
+        codeforces_data.get_request()
+        get_problems_data = codeforces_data.problems_data
+        data_base.insert_data("problems", get_problems_data)
+        asyncio.run(main_bot())
+
+
+
 
 
 # codeforces_data.get_request()
@@ -54,5 +63,5 @@ codeforces_data = RequestManager()
 #     await asyncio.gather(display_date(), main_bot())
 #
 #
-asyncio.run(main_bot())
+
 
