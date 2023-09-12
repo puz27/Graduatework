@@ -104,7 +104,7 @@ class DBManager:
                     with connection.cursor() as cursor:
                         col_count = "".join("%s," * len(problem))
                         query_search = f"""
-                                select contestId from problems
+                                select contestId from {table}
                                 where contestId = '{problem[0]}'
                                 """
                         query_insert = f"INSERT INTO {table} VALUES ({col_count[:-1]})"

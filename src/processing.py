@@ -6,6 +6,7 @@ import asyncio
 import schedule
 import time
 from apscheduler.schedulers.blocking import BlockingScheduler
+import datetime
 
 # prepare bases and add info to it
 connection_params = config()
@@ -22,20 +23,9 @@ codeforces_data = RequestManager()
 
 # codeforces_data.get_request()
 # get_problems_data = codeforces_data.problems_data
-# data_base.insert_new_data("problems", get_problems_data)
+# for problem in get_problems_data:
+#     data_base.insert_new_data("problems", problem)
 
-
-def some_jo():
-    print("22222222222222222222222222222222222222222")
-
-
-async def some_job():
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    # await schedule.every().minute.do(some_jo)
-
-    # scheduler = BlockingScheduler()
-    # scheduler.add_job(some_jo, 'interval', hours=1)
-    # scheduler.start()
 
 # find data in base
 # search_problem = data_base.get_problems("problems", 800, "implementation", 10)
@@ -43,24 +33,24 @@ async def some_job():
 #     print(problem)
 
 
-async def foo():
-    print("Start foo")
-    await asyncio.sleep(1)
-    print("End foo")
+# async def display_date():
+#     loop = asyncio.get_running_loop()
+#     end_time = loop.time() + 999
+#
+#     while True:
+#         if loop.time() >= end_time:
+#             break
+#         await asyncio.sleep(600)
+#         print("Make request for update base.")
+#         codeforces_data.get_request()
+#         get_problems_data = codeforces_data.problems_data
+#         for problem in get_problems_data:
+#             data_base.insert_new_data("problems", problem)
 
-
-async def bar():
-    print("Start bar")
-    await asyncio.sleep(2)
-    print("End bar")
-
-
-async def main():
-    await asyncio.gather(foo(), bar(), main_bot())
-
-
-asyncio.run(main())
-
-
-# asyncio.run(some_job())
-# asyncio.run(main_bot())
+#
+#
+# async def main():
+#     await asyncio.gather(display_date(), main_bot())
+#
+#
+# asyncio.run(main())

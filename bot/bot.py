@@ -123,14 +123,9 @@ async def result_chosen(message: Message):
 
 
 async def main_bot():
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    )
-
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",)
     dp = Dispatcher(storage=MemoryStorage())
     bot = Bot(TOKEN)
-
     dp.include_router(router)
     await dp.start_polling(bot)
 
