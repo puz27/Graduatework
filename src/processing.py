@@ -1,11 +1,12 @@
 from src.request_manager import RequestManager
 from src.data_base_manager import DBManager
 from src.utils import config
+import os
 from bot.bot import main_bot
 import asyncio
-import schedule
+# import schedule
 import time
-from apscheduler.schedulers.blocking import BlockingScheduler
+# from apscheduler.schedulers.blocking import BlockingScheduler
 import datetime
 
 # prepare bases and add info to it
@@ -53,4 +54,5 @@ codeforces_data = RequestManager()
 #     await asyncio.gather(display_date(), main_bot())
 #
 #
-# asyncio.run(main())
+asyncio.run(main_bot())
+

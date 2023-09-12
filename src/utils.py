@@ -1,8 +1,9 @@
 from configparser import ConfigParser
 import psycopg2
+import os
 
 
-def config(filename="../database.ini", section="postgresql") -> dict:
+def config(filename=f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/database.ini", section="postgresql") -> dict:
     """
     Get configuration for connection to database
     :param filename: name of configuration file
