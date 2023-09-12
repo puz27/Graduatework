@@ -10,12 +10,12 @@ connection_params = config()
 data_base = DBManager(connection_params, "codeforces_base")
 codeforces_data = RequestManager()
 
-data_base.create_database("codeforces_base")
-data_base.create_tables()
+# data_base.create_database("codeforces_base")
+# data_base.create_tables()
 #
-codeforces_data.get_request()
-get_problems_data = codeforces_data.problems_data
-data_base.insert_data("problems", get_problems_data)
+# codeforces_data.get_request()
+# get_problems_data = codeforces_data.problems_data
+# data_base.insert_data("problems", get_problems_data)
 
 
 # check every hour
@@ -28,3 +28,4 @@ data_base.insert_data("problems", get_problems_data)
 # for problem in search_problem:
 #     print(problem)
 
+print(data_base.get_problem_by_name("problems", "Flower-like Pseudotree", 10))
