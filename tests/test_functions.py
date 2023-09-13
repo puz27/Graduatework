@@ -1,8 +1,8 @@
 import pytest
 
-from src.request_manager import RequestManager
-from src.utils import config, prepare_problem_format, connection_to_db
 from src.data_base_manager import DBManager
+from src.request_manager import RequestManager
+from src.utils import config, prepare_problem_format
 
 
 def test_request_data():
@@ -30,13 +30,13 @@ def test_configuration():
     assert str(info.value) == 'Section test did not find in configuration file.'
 
 
-def test_connection_to_db():
-    with pytest.raises(Exception) as info:
-        connection_params = config(section="postg")
-        query = "INSERT INTO table VALUES TEST"
-        connection_to_db(connection_params, query)
-    assert str(info.value) == 'Section postg did not find in configuration file.'
-#
+# def test_connection_to_db():
+#     with pytest.raises(Exception) as info:
+#         connection_params = config(section="postg")
+#         query = "INSERT INTO table VALUES TEST"
+#         connection_to_db(connection_params, query)
+#     assert str(info.value) == 'Section postg did not find in configuration file.'
+# #
 
 
 

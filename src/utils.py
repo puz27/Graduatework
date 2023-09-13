@@ -22,27 +22,27 @@ def config(section, filename=f"{os.path.dirname(os.path.dirname(os.path.abspath(
     return db
 
 
-def connection_to_db(connection_params: dict, query_db: str) -> None:
-    """
-    Connect to database
-    :param connection_params: configuration for connection
-    :param query_db: query to database
-    :return:
-    """
-    try:
-        connection = psycopg2.connect(**connection_params)
-        try:
-            with connection:
-                with connection.cursor() as cursor:
-                    query = query_db
-                    cursor.execute(query)
-                    connection.commit()
-        except psycopg2.Error as er:
-            print(f"Error query.\n{er}")
-        finally:
-            connection.close()
-    except psycopg2.OperationalError as er:
-        print(er)
+# def connection_to_db(connection_params: dict, query_db: str) -> None:
+#     """
+#     Connect to database
+#     :param connection_params: configuration for connection
+#     :param query_db: query to database
+#     :return:
+#     """
+#     try:
+#         connection = psycopg2.connect(**connection_params)
+#         try:
+#             with connection:
+#                 with connection.cursor() as cursor:
+#                     query = query_db
+#                     cursor.execute(query)
+#                     connection.commit()
+#         except psycopg2.Error as er:
+#             print(f"Error query.\n{er}")
+#         finally:
+#             connection.close()
+#     except psycopg2.OperationalError as er:
+#         print(er)
 
 
 def prepare_problem_format(problem: dict) -> list:
@@ -67,4 +67,5 @@ def prepare_problem_format(problem: dict) -> list:
     }
     print(list(prepared_dict.values()))
     return list(prepared_dict.values())
+
 
