@@ -3,7 +3,7 @@ import psycopg2
 import os
 
 
-def config(filename=f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/database.ini", section="postgresql") -> dict:
+def config(section, filename=f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/database.ini") -> dict:
     """
     Get configuration for connection to database
     :param filename: name of configuration file

@@ -8,18 +8,19 @@ import logging
 from src.data_base_manager import DBManager
 from src.utils import config
 
-connection_params = config()
+connection_params = config(section="postgresql")
+TOKEN = config(section="token")["id"]
 data_base = DBManager(connection_params, "codeforces_base")
-TOKEN = '6480811920:AAHEynHpGdX9Wd7ImYGtOTi74Wjn2OmVqBw'
+# TOKEN = '6480811920:AAHEynHpGdX9Wd7ImYGtOTi74Wjn2OmVqBw'
 # global for work with difficult of problem
 problem_difficult = 0
 
 
 def make_row_keyboard(items: list[str]) -> ReplyKeyboardMarkup:
     """
-    Создаёт реплай-клавиатуру с кнопками в один ряд
-    :param items: список текстов для кнопок
-    :return: объект реплай-клавиатуры
+    Create keyboard
+    :param items: list of buttons
+    :return: prepared keyboard
     """
     row = [KeyboardButton(text=item) for item in items]
     return ReplyKeyboardMarkup(keyboard=[row], resize_keyboard=True)
@@ -128,5 +129,3 @@ async def main_bot():
     bot = Bot(TOKEN)
     dp.include_router(router)
     await dp.start_polling(bot)
-
-# asyncio.run(main_bot())

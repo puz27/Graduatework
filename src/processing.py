@@ -15,7 +15,7 @@ while True:
     if user_answer == user_questions[" 1.First running.(Create and prepare bases.)\n"]:
         # prepare bases and add info to it
         print("Prepare bases. Waiting near 5 minutes...")
-        connection_params = config()
+        connection_params = config(section="postgresql")
         data_base = DBManager(connection_params, "codeforces_base")
         codeforces_data = RequestManager()
 
