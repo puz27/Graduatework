@@ -1,10 +1,9 @@
 import psycopg2
 import os
-from src.utils import connection_to_db
 
 
 class DBManager:
-    """ Class connects and works with bases"""
+    """ Class connects and works with bases. """
     def __init__(self, connection_params: dict, database=None):
         self.__database = database
         self.__connection_params = connection_params
@@ -25,9 +24,9 @@ class DBManager:
                     query_create_base = f"CREATE DATABASE {new_database}"
                     cursor.execute(query_create_base)
                     self.__database = new_database
-                    print(f"База данных {new_database} успешно создана.")
+                    print(f"Data base {new_database} created.")
             except Exception as er:
-                print(f"БД:{new_database}. Ошибка с запросом создания БД.\n{er}")
+                print(f"Data base:{new_database}. Error with creation.\n{er}")
             finally:
                 connection.close()
         except psycopg2.OperationalError as er:
@@ -45,11 +44,10 @@ class DBManager:
             # Read file with queries
             try:
                 query_file = os.path.join(os.getcwd(), "../sql/queries.sql")
-                print(query_file)
                 with open(query_file, "r", encoding='utf-8') as read_file:
                     query_create_tables = read_file.read()
             except FileNotFoundError as error:
-                print(f"Файл с запросами не найден:{error}")
+                print(f"Can not find file with queries:{error}")
 
             # Create tables
             try:
@@ -57,9 +55,9 @@ class DBManager:
                     with connection.cursor() as cursor:
                         cursor.execute(query_create_tables)
                         connection.commit()
-                        print(f"Создание таблиц прошло успешно.")
+                        print(f"Table created.")
             except Exception as er:
-                print(f"Ошибка с запросом при создании таблиц.\n{er}")
+                print(f"Error with table creation.\n{er}")
             finally:
                 connection.close()
         except psycopg2.OperationalError as er:
@@ -80,14 +78,13 @@ class DBManager:
                 with connection:
                     with connection.cursor() as cursor:
                         col_count = "".join("%s," * len(data[0]))
-                        print(col_count)
 
                         query = f"INSERT INTO {table} VALUES ({col_count[:-1]})"
                         cursor.executemany(query, data)
                         connection.commit()
-                        print(f"Операция над таблицей {table} прошла успешно.")
+                        print(f"The operation with table {table} was successful.")
             except psycopg2.Error as er:
-                print(f"Ошибка с запросом.\n{er}")
+                print(f"Error with query.\n{er}")
             finally:
                 connection.close()
         except psycopg2.OperationalError as er:
@@ -118,7 +115,7 @@ class DBManager:
                             connection.commit()
 
             except psycopg2.Error as er:
-                print(f"Ошибка с запросом.\n{er}")
+                print(f"Error with query.\n{er}")
             finally:
                 connection.close()
         except psycopg2.OperationalError as er:
@@ -143,7 +140,7 @@ class DBManager:
                         get_problems = cursor.fetchall()
 
             except psycopg2.Error as er:
-                print(f"Ошибка с запросом.\n{er}")
+                print(f"Error with query.\n{er}")
             finally:
                 connection.close()
                 return get_problems
@@ -168,7 +165,7 @@ class DBManager:
                         get_problems = cursor.fetchall()
 
             except psycopg2.Error as er:
-                print(f"Ошибка с запросом.\n{er}")
+                print(f"Error with query.\n{er}")
             finally:
                 connection.close()
                 return get_problems

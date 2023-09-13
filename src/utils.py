@@ -19,7 +19,7 @@ def config(filename=f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)
             db[param[0]] = param[1]
     else:
         raise Exception(
-            'Секция {0} не найдена в {1}.'.format(section, filename))
+            'Section {0} did not find in {1}.'.format(section, filename))
     return db
 
 
@@ -48,16 +48,12 @@ def connection_to_db(connection_params: dict, query_db: str) -> None:
         print(er)
 
 
-# def prepare_problem_format(problem: dict) -> list:
-#     default_tags = ('contestId', 'index', 'name', 'type', 'rating', 'solvedCount', 'tags', 'points')
-#     for tag in default_tags:
-#         problem.setdefault(tag)
-#     # sorted_problem = dict(sorted(problem.items()))
-#     sorted_problem = dict(sorted(problem.items()))
-#     return list(sorted_problem.values())
-
-
 def prepare_problem_format(problem: dict) -> list:
+    """
+    Prepare data before load to base. ContestId will consist from contestId and index. Tags convert to str.
+    :param problem: dictionary with one problem
+    :return: list with problem.
+    """
     default_tags = ('name', 'type', 'rating', 'solvedCount', 'tags', 'points')
     for tag in default_tags:
         problem.setdefault(tag)

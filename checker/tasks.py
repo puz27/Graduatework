@@ -3,8 +3,6 @@ from src.data_base_manager import DBManager
 from src.request_manager import RequestManager
 from src.utils import config
 
-# celery -A checker beat --loglevel=INFO
-# celery -A checker worker --loglevel=INFO
 
 codeforces_data = RequestManager()
 connection_params = config()
