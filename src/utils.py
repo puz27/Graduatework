@@ -18,8 +18,7 @@ def config(section, filename=f"{os.path.dirname(os.path.dirname(os.path.abspath(
         for param in params:
             db[param[0]] = param[1]
     else:
-        raise Exception(
-            'Section {0} did not find in {1}.'.format(section, filename))
+        raise Exception(f'Section {section} did not find in configuration file.')
     return db
 
 
@@ -38,10 +37,8 @@ def connection_to_db(connection_params: dict, query_db: str) -> None:
                     query = query_db
                     cursor.execute(query)
                     connection.commit()
-                    # for company in (cursor.fetchall()):
-                    #     print(*company)
         except psycopg2.Error as er:
-            print(f"Ошибка с запросом.\n{er}")
+            print(f"Error query.\n{er}")
         finally:
             connection.close()
     except psycopg2.OperationalError as er:
@@ -54,6 +51,7 @@ def prepare_problem_format(problem: dict) -> list:
     :param problem: dictionary with one problem
     :return: list with problem.
     """
+    print (problem)
     default_tags = ('name', 'type', 'rating', 'solvedCount', 'tags', 'points')
     for tag in default_tags:
         problem.setdefault(tag)
@@ -67,5 +65,6 @@ def prepare_problem_format(problem: dict) -> list:
         'tags': " ".join(problem["tags"]),
         'type': problem["type"]
     }
+    print(list(prepared_dict.values()))
     return list(prepared_dict.values())
 

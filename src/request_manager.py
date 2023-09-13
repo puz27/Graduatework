@@ -16,14 +16,13 @@ class RequestManager:
         url_problemset = "https://codeforces.com/api/problemset.problems"
         response = requests.get(url_problemset)
         if response.status_code == 200:
-            if response.status_code == 200:
-                self.__problems_data.clear()
-                print("Waiting...")
-                for statistic in response.json()["result"]["problemStatistics"]:
-                    for problem in response.json()["result"]["problems"]:
-                        if problem["contestId"] == statistic["contestId"] and problem["index"] == statistic["index"]:
-                            problem["solvedCount"] = statistic["solvedCount"]
-                            prepared_data = prepare_problem_format(problem)
-                            self.__problems_data.append(prepared_data)
+            self.__problems_data.clear()
+            print("Waiting...")
+            for statistic in response.json()["result"]["problemStatistics"]:
+                for problem in response.json()["result"]["problems"]:
+                    if problem["contestId"] == statistic["contestId"] and problem["index"] == statistic["index"]:
+                        problem["solvedCount"] = statistic["solvedCount"]
+                        prepared_data = prepare_problem_format(problem)
+                        self.__problems_data.append(prepared_data)
         else:
             return "Error:", response.status_code
