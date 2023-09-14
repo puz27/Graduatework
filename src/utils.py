@@ -31,7 +31,6 @@ def prepare_problem_format(problem: dict) -> list:
     default_tags = ('name', 'type', 'rating', 'solvedCount', 'tags', 'points')
     for tag in default_tags:
         problem.setdefault(tag)
-    print(problem)
     prepared_dict = {
         'contestId': str(problem["contestId"]) + str(problem["index"]),
         'name': problem["name"],
@@ -39,6 +38,5 @@ def prepare_problem_format(problem: dict) -> list:
         'rating': problem["rating"],
         'solvedCount': problem["solvedCount"],
         'tags': " ".join(problem["tags"]),
-        # 'type': problem["type"]
-    }
+        }
     return list(prepared_dict.values())
