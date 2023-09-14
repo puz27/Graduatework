@@ -94,14 +94,19 @@ async def difficult_chosen(message: Message, state: FSMContext):
 @router.message(MakeChoice.choosing_result, F.text.in_(available_themes))
 async def result_chosen(message: Message):
     global problem_difficult
-    problems_lists = []
     problem_theme = message.text
 
     search_problem = data_base.get_problems("problems", problem_difficult, problem_theme, 10)
+    converted_list = []
     for problem in search_problem:
-        problems_lists.append(problem)
-    print(problems_lists)
-    await message.answer(text=f"Founded information:\n {problems_lists}", reply_markup=make_row_keyboard(the_end))
+        converted_list.append(problem)
+        converted_list.append('\n')
+
+    problems_string = ''.join([str(problem) for problem in converted_list])
+    if problems_string:
+        await message.answer(text=f"Founded information:\n {problems_string}", reply_markup=make_row_keyboard(the_end))
+    else:
+        await message.answer(text=f"No data.", reply_markup=make_row_keyboard(the_end))
 
 
 @router.message(MakeChoice.choosing_result)
@@ -113,14 +118,18 @@ async def result_chosen(message: Message, state: FSMContext):
 # Second step for Get data (Name of problem)
 @router.message(MakeChoice.choosing_name)
 async def result_chosen(message: Message):
-    problems_lists = []
     problem_name = message.text
 
     search_problem = data_base.get_problem_by_name("problems", problem_name, 10)
+    converted_list = []
     for problem in search_problem:
-        problems_lists.append(problem)
-    print(problems_lists)
-    await message.answer(text=f"Founded information:\n {problems_lists}", reply_markup=make_row_keyboard(the_end))
+        converted_list.append(problem)
+        converted_list.append('\n')
+    problems_string = ''.join([str(problem) for problem in converted_list])
+    if problems_string:
+        await message.answer(text=f"Founded information:\n {problems_string}", reply_markup=make_row_keyboard(the_end))
+    else:
+        await message.answer(text=f"No data.", reply_markup=make_row_keyboard(the_end))
 
 
 async def main_bot():

@@ -43,7 +43,7 @@ class DBManager:
 
             # Read file with queries
             try:
-                query_file = os.path.join(os.getcwd(), "../sql/queries.sql")
+                query_file = os.path.join(os.getcwd(), f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/sql/queries.sql")
                 with open(query_file, "r", encoding='utf-8') as read_file:
                     query_create_tables = read_file.read()
             except FileNotFoundError as error:

@@ -28,3 +28,5 @@ def main_processing() -> None:
             get_problems_data = codeforces_data.problems_data
             data_base.insert_data("problems", get_problems_data)
             asyncio.run(main_bot())
+
+

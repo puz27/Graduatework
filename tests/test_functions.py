@@ -1,8 +1,45 @@
 import pytest
-
 from src.data_base_manager import DBManager
 from src.request_manager import RequestManager
 from src.utils import config, prepare_problem_format
+from sqlalchemy import Column, String, INTEGER, TEXT, ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+
+class CodeforcesBase(Base):
+    __tablename__ = 'problems'
+
+    contestId = Column(String(10), nullable=False, primary_key=True)
+    name = Column(String(100), nullable=False)
+    points = Column(String(100), nullable=False)
+    rating = Column(INTEGER, nullable=False)
+    solvedCount = Column(INTEGER, nullable=False)
+    tags = Column(String(1000), nullable=False)
+    type = Column(String(100), nullable=False)
+
+
+PROBLEM_ROWS = [
+    {'contestId': 1872,
+     'index': 'C',
+     'name': 'Non-coprime Split',
+     'type': 'PROGRAMMING',
+     'tags': 'math number theory',
+     'solvedCount': 16480,
+     'rating': None,
+     'points': None
+     },
+    {'contestId': 1872,
+     'index': 'B',
+     'name': 'The Corridor or There and Back Again',
+     'type': 'PROGRAMMING',
+     'tags': ['greedy implementation'],
+     'solvedCount': 20599,
+     'rating': None,
+     'points': None
+     }
+]
 
 
 def test_request_data():
