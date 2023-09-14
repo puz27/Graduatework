@@ -1,7 +1,3 @@
----
---- Create table problems
----
-
 CREATE TABLE problems (
 contestId VARCHAR PRIMARY KEY,
 name VARCHAR(100),

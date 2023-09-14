@@ -25,4 +25,4 @@ class RequestManager:
                         prepared_data = prepare_problem_format(problem)
                         self.__problems_data.append(prepared_data)
         else:
-            return "Error:", response.status_code
+            return "Error:"

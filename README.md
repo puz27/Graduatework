@@ -5,3 +5,4 @@
 pip install pytest-cov
 pytest --cov=src --cov-report=html
 pytest --cov
+pytest --cov --cov-report html

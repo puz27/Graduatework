@@ -1,6 +1,8 @@
 import psycopg2
 import os
 
+from src.utils import open_query_file
+
 
 class DBManager:
     """ Class connects and works with bases. """
@@ -41,19 +43,11 @@ class DBManager:
             self.__connection_params.update({'dbname': self.__database})
             connection = psycopg2.connect(**self.__connection_params)
 
-            # Read file with queries
-            try:
-                query_file = os.path.join(os.getcwd(), f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}/sql/queries.sql")
-                with open(query_file, "r", encoding='utf-8') as read_file:
-                    query_create_tables = read_file.read()
-            except FileNotFoundError as error:
-                print(f"Can not find file with queries:{error}")
-
             # Create tables
             try:
                 with connection:
                     with connection.cursor() as cursor:
-                        cursor.execute(query_create_tables)
+                        cursor.execute(open_query_file("/sql/queries.sql"))
                         connection.commit()
                         print(f"Table created.")
             except Exception as er:

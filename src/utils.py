@@ -42,3 +42,16 @@ def prepare_problem_format(problem: dict) -> list:
     return list(prepared_dict.values())
 
 
+def open_query_file(file_path: str) -> str:
+    """
+    Open file with creation table query
+    :param file_path: path to file
+    :return: query
+    """
+    try:
+        query_file = os.path.join(os.getcwd(), f"{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}{file_path}")
+        with open(query_file, "r", encoding='utf-8') as read_file:
+            query_create_tables = read_file.read()
+            return query_create_tables
+    except FileNotFoundError as error:
+        print(f"Can not find file with queries:{error}")
