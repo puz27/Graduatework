@@ -1,5 +1,6 @@
 import pytest
 from src.data_base_manager import DBManager
+from src.request_manager import RequestManager
 from src.utils import config, prepare_problem_format
 import requests
 
@@ -59,3 +60,8 @@ def test_request():
     url_problemset = "https://codeforces.com/api/problemset.problems"
     response = requests.get(url_problemset)
     assert response.status_code == 200
+
+
+def test_request_empty_data():
+    codeforces_data = RequestManager()
+    assert codeforces_data.problems_data == []

@@ -1,7 +1,7 @@
 # codeforces.com parser + telegram bot
 * Grabber collects data from codeforces.com to database
 * Grabber check data updates on site every hour
-* Telegram bot can request data from database
+* Telegram bot can request data from database (up to 10 values)
 ## Requirements
 * Python
 * Redis
