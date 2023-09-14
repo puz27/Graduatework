@@ -70,7 +70,9 @@ async def options_chosen(message: Message, state: FSMContext):
 @router.message(MakeChoice.choosing_options, F.text == "How is it work?")
 async def options_chosen(message: Message, state: FSMContext):
     await state.update_data(chosen_options=message.text)
-    await message.answer(text=f"ИНФОРМАЦИЯ",
+    await message.answer(text=f"Bot makes requests to databases and return information.\n"
+                              f"Can get data by Difficult and Theme.\n"
+                              f"Can get data by Name of the problem.",
                          reply_markup=(make_keyboard(available_options, 1)).as_markup(resize_keyboard=True))
 
 

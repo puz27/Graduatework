@@ -3,12 +3,6 @@ from src.data_base_manager import DBManager
 from src.request_manager import RequestManager
 from src.utils import config, prepare_problem_format
 
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, ForeignKey
-from sqlalchemy.engine import URL
-from sqlalchemy.orm import declarative_base, relationship, sessionmaker
-from datetime import datetime
-import pytest
-
 
 def test_request_data():
     codeforces_data = RequestManager()
@@ -33,6 +27,14 @@ def test_configuration():
         connection_params = config(section="test")
         data_base = DBManager(connection_params, "codeforces_base")
     assert str(info.value) == 'Section test did not find in configuration file.'
+
+
+def test_confi():
+    expected = {'host': 'localhost', 'user': 'postgres', 'password': 'postgres', 'port': '5432'}
+    assert config("postgresql") == expected
+
+
+
 
 
 # def test_connection_to_db():
