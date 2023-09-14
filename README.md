@@ -1,18 +1,18 @@
-# codeforces.com PARSER AND TELEGRAM BOT
-Grabber collects data from codeforces.com to database
-Grabber check data updates on site every hour
-Telegram bot can request data from database
+# codeforces.com parser + telegram bot
+* Grabber collects data from codeforces.com to database
+* Grabber check data updates on site every hour
+* Telegram bot can request data from database
 ## Requirements
 * Python
 * Redis
 * Postgres
 ## Project folders description
-[bot] - telegram bot configuration 
-[checker] - celery configuration
-[sql] - creation table query 
-[srq] - functional processing
-[tests] - pytest
-[img] - pictures for README
+* [bot] - telegram bot configuration 
+* [checker] - celery configuration
+* [sql] - creation table query 
+* [srq] - functional processing
+* [tests] - pytest
+* [img] - pictures for README
 ## Installation
 * Download repo
 * Install requirements (pip install -r requirements.txt)
@@ -34,13 +34,13 @@ pip install pytest-cov
 pytest --cov=src --cov-report=html
 pytest --cov
 ## Examples work with interface
-cli menu
+### cli menu
 ![img.png](img/img.png)
-main telegram bot menu
+### main telegram bot menu
 ![img2.png](img/img2.png)
-telegram bot menu - search by difficult and theme
+### telegram bot menu - search by difficult and theme
 ![img3.png](img/img3.png)
-telegram bot menu - search by title
+### telegram bot menu - search by title
 ![img4.png](img/img4.png)
 ## Additional
 * Author: Avramenko Nikolay
