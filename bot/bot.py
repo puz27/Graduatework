@@ -14,7 +14,6 @@ import logging
 connection_params = config(section="postgresql")
 TOKEN = config(section="token")["id"]
 data_base = DBManager(connection_params, "codeforces_base")
-# TOKEN = '6480811920:AAHEynHpGdX9Wd7ImYGtOTi74Wjn2OmVqBw'
 # global for work with difficult of problem
 problem_difficult = 0
 
@@ -142,6 +141,7 @@ async def result_chosen(message: Message):
 
 
 async def main_bot():
+    print("Can start work with telegram bot.")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",)
     dp = Dispatcher(storage=MemoryStorage())
     bot = Bot(TOKEN)

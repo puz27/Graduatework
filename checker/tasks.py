@@ -5,7 +5,7 @@ from src.utils import config
 
 
 codeforces_data = RequestManager()
-connection_params = config()
+connection_params = config("postgresql")
 data_base = DBManager(connection_params, "codeforces_base")
 
 

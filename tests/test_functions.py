@@ -4,7 +4,6 @@ from src.utils import config, prepare_problem_format
 import requests
 
 
-
 def test_prepare_problem_format():
     data = {
         'contestId': 1872,
