@@ -6,6 +6,6 @@ app.config_from_object('checker.celeryconfig')
 app.conf.beat_schedule = {
     'run-me-every-one-hour': {
         'task': 'checker.tasks.check',
-        'schedule': crontab(minute='*/15'),
+        'schedule': crontab(minute='*/30'),
     }
 }
