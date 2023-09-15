@@ -31,8 +31,8 @@
 Test make after creation databases (some test work with database)
 * pytest --cov
 * pytest --cov --cov-report html
-pip install pytest-cov
-pytest --cov=src --cov-report=html
+ pip install pytest-cov
+ pytest --cov=src --cov-report=html
 pytest --cov
 ## Examples work with interface
 ### cli menu
@@ -45,4 +45,4 @@ pytest --cov
 ![img4.png](img/img4.png)
 ## Additional
 * Author: Avramenko Nikolay
-* Date of release: 2023/08/09
+* Date of release: 2023/09/17
