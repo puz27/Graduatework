@@ -28,6 +28,7 @@
 * after first running and loading data from site you can work with bot
 * run command /start in telegram bot
 ## Testing
+Test make after creation databases (some test work with database)
 * pytest --cov
 * pytest --cov --cov-report html
 pip install pytest-cov

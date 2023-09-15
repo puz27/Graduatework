@@ -13,14 +13,12 @@ class DBManager:
     def create_database(self, new_database: str) -> None:
         """
         Create new database
-        :param new_database:  name of new database
-        :return:
+        :param new_database:  name database
+        :return:None
         """
         try:
             connection = psycopg2.connect(**self.__connection_params)
             connection.autocommit = True
-
-            # Create database
             try:
                 with connection.cursor() as cursor:
                     query_create_base = f"CREATE DATABASE {new_database}"
@@ -37,13 +35,11 @@ class DBManager:
     def create_tables(self) -> None:
         """
         Create new tables
-        :return:
+        :return: None
         """
         try:
             self.__connection_params.update({'dbname': self.__database})
             connection = psycopg2.connect(**self.__connection_params)
-
-            # Create tables
             try:
                 with connection:
                     with connection.cursor() as cursor:
@@ -62,17 +58,15 @@ class DBManager:
         Insert new data to database
         :param table: table name for insert
         :param data: list with data for processing
-        :return:
+        :return: None
         """
         try:
             self.__connection_params.update({'dbname': self.__database})
             connection = psycopg2.connect(**self.__connection_params)
-
             try:
                 with connection:
                     with connection.cursor() as cursor:
                         col_count = "".join("%s," * len(data[0]))
-
                         query = f"INSERT INTO {table} VALUES ({col_count[:-1]})"
                         cursor.executemany(query, data)
                         connection.commit()
@@ -85,7 +79,12 @@ class DBManager:
             print(er)
 
     def insert_new_data(self, table: str, problem: list) -> None:
-
+        """
+        Update data to database
+        :param table: table name for insert
+        :param problem: problem that we can add to database if it not exist
+        :return:
+        """
         try:
             self.__connection_params.update({'dbname': self.__database})
             connection = psycopg2.connect(**self.__connection_params)
@@ -99,7 +98,6 @@ class DBManager:
                                 where contestId = '{problem[0]}'
                                 """
                         query_insert = f"INSERT INTO {table} VALUES ({col_count[:-1]})"
-
                         cursor.execute(query_search)
                         connection.commit()
                         get_id = cursor.fetchone()
@@ -115,24 +113,29 @@ class DBManager:
         except psycopg2.OperationalError as er:
             print(er)
 
-    def get_problems(self,  table: str, rating: int, tag: str, limit: int) -> None:
-
+    def get_problems(self, table: str, rating: int, tag: str, limit: int) -> None:
+        """
+        Get data from databases for telegram bot / search by difficult and theme
+        :param table: table with problems
+        :param rating: problem difficult
+        :param tag: problem theme
+        :param limit: problem max count
+        :return: None
+        """
         try:
             self.__connection_params.update({'dbname': self.__database})
             connection = psycopg2.connect(**self.__connection_params)
-
             try:
                 with connection:
                     with connection.cursor() as cursor:
                         query_search = f"""
-                                select * from problems
+                                select * from {table}
                                 where rating = {rating} and tags = '{tag}'
                                 LIMIT {limit}
                                 """
                         cursor.execute(query_search)
                         connection.commit()
                         get_problems = cursor.fetchall()
-
             except psycopg2.Error as er:
                 print(f"Error with query.\n{er}")
             finally:
@@ -142,7 +145,13 @@ class DBManager:
             print(er)
 
     def get_problem_by_name(self,  table: str, problem_name: str, limit: int) -> None:
-
+        """
+        Get data from databases for telegram bot / search by name
+        :param table: table with problems
+        :param problem_name: problem name
+        :param limit: problem max count
+        :return: None
+        """
         try:
             self.__connection_params.update({'dbname': self.__database})
             connection = psycopg2.connect(**self.__connection_params)
@@ -153,11 +162,11 @@ class DBManager:
                         query_search = f"""
                         select * from {table}
                         where name = '{problem_name}'
+                        LIMIT {limit}
                         """
                         cursor.execute(query_search)
                         connection.commit()
                         get_problems = cursor.fetchall()
-
             except psycopg2.Error as er:
                 print(f"Error with query.\n{er}")
             finally:
@@ -165,6 +174,3 @@ class DBManager:
                 return get_problems
         except psycopg2.OperationalError as er:
             print(er)
-
-
-

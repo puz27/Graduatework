@@ -19,7 +19,7 @@ def main_processing() -> None:
             print("Prepare bases. Waiting near 5 minutes...")
             connection_params = config(section="postgresql")
             data_base = DBManager(connection_params, "codeforces_base")
-            codeforces_data = RequestManager()
+            codeforces_data = RequestManager("https://codeforces.com/api/problemset.problems")
 
             data_base.create_database("codeforces_base")
             data_base.create_tables()
@@ -28,5 +28,3 @@ def main_processing() -> None:
             get_problems_data = codeforces_data.problems_data
             data_base.insert_data("problems", get_problems_data)
             asyncio.run(main_bot())
-
-

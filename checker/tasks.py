@@ -4,7 +4,7 @@ from src.request_manager import RequestManager
 from src.utils import config
 
 
-codeforces_data = RequestManager()
+codeforces_data = RequestManager("https://codeforces.com/api/problemset.problems")
 connection_params = config("postgresql")
 data_base = DBManager(connection_params, "codeforces_base")
 
