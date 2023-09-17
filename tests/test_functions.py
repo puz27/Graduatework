@@ -1,7 +1,7 @@
 import pytest
 from src.data_base_manager import DBManager
 from src.request_manager import RequestManager
-from src.utils import config, prepare_problem_format
+from src.utils import config, prepare_problem_format, execute_bot_insert_name
 import requests
 
 
@@ -82,3 +82,9 @@ def test_request3(capsys):
     codeforces_data.get_request()
     captured = capsys.readouterr()
     assert captured.out == expected
+
+
+def test_execute_bot_insert_name():
+    test_name = "Buying Torches'"
+    expected = "Buying Torches"
+    assert execute_bot_insert_name(test_name) == expected

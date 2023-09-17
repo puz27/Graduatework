@@ -54,3 +54,7 @@ def open_query_file(file_path: str) -> str:
             return query_create_tables
     except FileNotFoundError as error:
         print(f"Can not find file with queries:{error}")
+
+
+def execute_bot_insert_name(search_name: str):
+    return search_name.replace("'", "")

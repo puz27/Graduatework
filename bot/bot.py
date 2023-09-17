@@ -6,7 +6,7 @@ from aiogram.types import KeyboardButton, Message
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 from src.data_base_manager import DBManager
-from src.utils import config
+from src.utils import config, execute_bot_insert_name
 from src.dictionary import available_options, available_themes, the_end
 import logging
 
@@ -125,7 +125,7 @@ async def result_chosen(message: Message, state: FSMContext):
 # Second step for Get data (Name of problem)
 @router.message(MakeChoice.choosing_name)
 async def result_chosen(message: Message):
-    problem_name = message.text
+    problem_name = execute_bot_insert_name(message.text)
 
     search_problem = data_base.get_problem_by_name("problems", problem_name, 10)
     converted_list = []
