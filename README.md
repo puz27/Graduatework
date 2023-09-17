@@ -15,6 +15,8 @@
 * [img] - pictures for README
 ## Installation
 * Download repo
+* create virtual environment (python3 -m venv venv)
+* activate virtual environment (source venv/bin/activate)
 * Install requirements (pip install -r requirements.txt)
 * Run service Redis (service redis-server start)
 ## Prepare 
@@ -24,7 +26,7 @@
 ## Start service
 * run command: celery -A checker beat --loglevel=INFO
 * run command: celery -A checker worker --loglevel=INFO
-* run python project
+* run python project (main.py)
 * after first running and loading data from site you can work with bot
 * run command /start in telegram bot
 ## Testing
