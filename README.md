@@ -30,7 +30,7 @@
 * after first running and loading data from site you can work with bot
 * run command /start in telegram bot
 ## Testing
-Testing after creation databases (some test work with database)
+Testing after creation databases (some test works with database)
 * pytest --cov
 * pytest --cov --cov-report html
  ## Examples work with interface
