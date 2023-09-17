@@ -33,10 +33,7 @@
 Testing after creation databases (some test work with database)
 * pytest --cov
 * pytest --cov --cov-report html
-  pip install pytest-cov
-  pytest --cov=src --cov-report=html
-pytest --cov
-## Examples work with interface
+ ## Examples work with interface
 ### cli menu
 ![img.png](img/img.png)
 ### main telegram bot menu
