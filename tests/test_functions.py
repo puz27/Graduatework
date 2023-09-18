@@ -85,6 +85,7 @@ def test_request3(capsys):
 
 
 def test_execute_bot_insert_name():
+    """ Test checking symbols """
     test_name = "Buying Torches'"
     expected = "Buying Torches"
     assert execute_bot_insert_name(test_name) == expected
